@@ -793,7 +793,7 @@ export function IncomeStatement({ restaurantId, dateFrom, dateTo }: IncomeStatem
   return (
     <Card>
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-4 sm:flex-nowrap">
           <div>
             <CardTitle>Income Statement</CardTitle>
             <CardDescription>
@@ -805,7 +805,7 @@ export function IncomeStatement({ restaurantId, dateFrom, dateTo }: IncomeStatem
               )}
             </CardDescription>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4 sm:flex-nowrap">
             <div className="flex items-center space-x-2">
               <Switch 
                 id="accrual-mode" 

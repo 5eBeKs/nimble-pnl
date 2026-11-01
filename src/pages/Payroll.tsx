@@ -870,9 +870,9 @@ const Payroll = () => {
       {/* Payroll Table */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <CardTitle>Employee Payroll Details</CardTitle>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-2">
                 <label htmlFor="payroll-group-by" className="text-[13px] text-muted-foreground">Group</label>
                 <Select value={groupBy} onValueChange={(v) => { setGroupBy(v as PayrollGroupMode); setCollapsedGroups(new Set()); }}>
