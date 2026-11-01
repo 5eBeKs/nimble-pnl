@@ -269,8 +269,8 @@ export function BalanceSheet({ restaurantId, asOfDate }: BalanceSheetProps) {
 
   // For balance sheet display: 
   // - Assets (debit normal) show as-is
-  // - Liabilities (credit normal) show absolute value 
-  // - Equity (credit normal) show absolute value
+  // - Liabilities (credit normal) show credits minus debits, so a debit balance shows as negative
+  // - Equity (credit normal) show credits minus debits, so a net loss shows as negative
   const totalAssets = balanceData?.assets.reduce((sum, acc) => sum + acc.current_balance, 0) || 0;
   const totalLiabilities = balanceData?.liabilities.reduce((sum, acc) => sum + acc.current_balance, 0) || 0;
   const totalEquity = balanceData?.equity.reduce((sum, acc) => sum + acc.current_balance, 0) || 0;
@@ -286,11 +286,11 @@ export function BalanceSheet({ restaurantId, asOfDate }: BalanceSheetProps) {
       ['', 'Total Assets', totalAssets],
       [''],
       ['LIABILITIES'],
-      ...balanceData!.liabilities.map(acc => [acc.account_code, acc.account_name, Math.abs(acc.current_balance)]),
+      ...balanceData!.liabilities.map(acc => [acc.account_code, acc.account_name, acc.current_balance]),
       ['', 'Total Liabilities', totalLiabilities],
       [''],
       ['EQUITY'],
-      ...balanceData!.equity.map(acc => [acc.account_code, acc.account_name, Math.abs(acc.current_balance)]),
+      ...balanceData!.equity.map(acc => [acc.account_code, acc.account_name, acc.current_balance]),
       ['', 'Total Equity', totalEquity],
       [''],
       ['', 'Total Liabilities & Equity', totalLiabilitiesAndEquity],
@@ -332,7 +332,7 @@ export function BalanceSheet({ restaurantId, asOfDate }: BalanceSheetProps) {
       { label: 'LIABILITIES', amount: undefined, isBold: true },
       ...balanceData!.liabilities.map(acc => ({
         label: `${acc.account_code} - ${acc.account_name}`,
-        amount: Math.abs(acc.current_balance),
+        amount: acc.current_balance,
         indent: 1,
       })),
       { label: 'Total Liabilities', amount: totalLiabilities, isSubtotal: true },
@@ -340,7 +340,7 @@ export function BalanceSheet({ restaurantId, asOfDate }: BalanceSheetProps) {
       { label: 'EQUITY', amount: undefined, isBold: true },
       ...balanceData!.equity.map(acc => ({
         label: `${acc.account_code} - ${acc.account_name}`,
-        amount: Math.abs(acc.current_balance),
+        amount: acc.current_balance,
         indent: 1,
       })),
       { label: 'Total Equity', amount: totalEquity, isSubtotal: true },
@@ -429,7 +429,7 @@ export function BalanceSheet({ restaurantId, asOfDate }: BalanceSheetProps) {
                     <span className="text-xs font-mono text-muted-foreground">{account.account_code}</span>
                     <span>{account.account_name}</span>
                   </div>
-                  <span className="font-medium">{formatCurrency(Math.abs(account.current_balance))}</span>
+                  <span className="font-medium">{formatCurrency(account.current_balance)}</span>
                 </div>
               ))}
               <div className="flex justify-between items-center py-2 px-3 border-t font-semibold">
@@ -449,7 +449,7 @@ export function BalanceSheet({ restaurantId, asOfDate }: BalanceSheetProps) {
                     <span className="text-xs font-mono text-muted-foreground">{account.account_code}</span>
                     <span>{account.account_name}</span>
                   </div>
-                  <span className="font-medium">{formatCurrency(Math.abs(account.current_balance))}</span>
+                  <span className="font-medium">{formatCurrency(account.current_balance)}</span>
                 </div>
               ))}
               <div className="flex justify-between items-center py-2 px-3 border-t font-semibold">
